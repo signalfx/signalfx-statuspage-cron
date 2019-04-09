@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import argparse, httplib, logging, os, urllib, signalfx, sys, time
 data = {}
 
