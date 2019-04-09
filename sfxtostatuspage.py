@@ -2,6 +2,16 @@
 import argparse, httplib, logging, os, urllib, signalfx, sys, time
 data = {}
 
+parser = argparse.ArgumentParser(description='Send metrics from SignalFx to StatusPage', epilog='Specify SFx token via SFX_AUTH_TOKEN and StatusPage token via SFX_STATUSPAGE_TOKEN environment variables')
+parser.add_argument('--page_id', required=True, help='Id of StatusPage page to send metrics to')
+parser.add_argument('--metric_id', required=True, help='Id of StatusPage metric to send')
+parser.add_argument('--query', required=True, help='SignalFlow query to run')
+parser.add_argument('--sfx_realm', help='SignalFx Realm (defaults to none)')
+parser.add_argument('--status_page_api_base', default='api.statuspage.io', help='Hostname of SignalFx API endpoint. Defaults to api.statuspage.io')
+parser.add_argument('--verbose', help='Be verbose')
+parser.add_argument('--history_in_seconds', type=int, default=60, help='Number of seconds of metrics to fetch and send. Defaults to 60')
+args = parser.parse_args()
+
 if 'SFX_AUTH_TOKEN' not in os.environ:
     logging.error('ERROR: Please specify an SFx auth token via SFX_AUTH_TOKEN')
     sys.exit(1)
@@ -11,16 +21,6 @@ if 'SFX_STATUSPAGE_TOKEN' not in os.environ:
 
 sfx_api_key = os.environ['SFX_AUTH_TOKEN']
 sp_api_key = os.environ['SFX_STATUSPAGE_TOKEN']
-
-parser = argparse.ArgumentParser(description='Send metrics from SignalFx to StatusPage')
-parser.add_argument('--page_id', required=True)
-parser.add_argument('--metric_id', required=True)
-parser.add_argument('--sfx_realm', help='SignalFx Realm (defaults to none)')
-parser.add_argument('--status_page_api_base', default='api.statuspage.io', help='Hostname of SignalFx API endpoint. Defaults to api.statu')
-parser.add_argument('--query', required=True, help='SignalFlow query to run')
-parser.add_argument('--verbose', help='Be verbose')
-parser.add_argument('--history_in_seconds', type=int, default=60)
-args = parser.parse_args()
 
 if args.verbose:
     logging.basicConfig(level=logging.DEBUG)
