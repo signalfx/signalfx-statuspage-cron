@@ -1,3 +1,5 @@
+>ℹ️&nbsp;&nbsp;SignalFx was acquired by Splunk in October 2019. See [Splunk SignalFx](https://www.splunk.com/en_us/investor-relations/acquisitions/signalfx.html) for more information.
+
 # SignalFx Metrics to StatusPage Cron Tool
 
 This is a tool for submitting SignalFx metrics to StatusPage as [System Metrics](https://help.statuspage.io/knowledge_base/topics/introduction-1). It's a Python 2 cron job who's only dependency is [signalfx-python](https://github.com/signalfx/signalfx-python)
